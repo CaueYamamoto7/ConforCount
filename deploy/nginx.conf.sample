@@ -1,0 +1,36 @@
+# /etc/nginx/sites-available/obrigacoes
+# Troque obrigacoes.SEUDOMINIO.com.br pelo seu endereço. O certbot acrescenta o bloco HTTPS (443) sozinho.
+
+limit_req_zone $binary_remote_addr zone=obrig_api:10m rate=10r/s;
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name obrigacoes.SEUDOMINIO.com.br;
+
+    root /var/www/obrigacoes/public;
+    index index.html;
+    client_max_body_size 1m;
+    server_tokens off;
+
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header Referrer-Policy "same-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" always;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Único arquivo PHP que executa.
+    location = /api.php {
+        limit_req zone=obrig_api burst=40 nodelay;
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;   # confira a versão: ls /run/php/
+    }
+
+    # Qualquer outro .php é bloqueado; arquivos ocultos também.
+    location ~ \.php$ { return 404; }
+    location ~ /\.   { deny all; }
+}

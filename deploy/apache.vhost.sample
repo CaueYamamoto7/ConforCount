@@ -1,0 +1,15 @@
+# /etc/apache2/sites-available/obrigacoes.conf   (alternativa ao Nginx)
+# Habilite: a2enmod headers proxy_fcgi setenvif && a2enconf php8.3-fpm && a2ensite obrigacoes && systemctl reload apache2
+<VirtualHost *:80>
+    ServerName obrigacoes.SEUDOMINIO.com.br
+    DocumentRoot /var/www/obrigacoes/public
+    ServerSignature Off
+
+    <Directory /var/www/obrigacoes/public>
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/obrigacoes-error.log
+    CustomLog ${APACHE_LOG_DIR}/obrigacoes-access.log combined
+</VirtualHost>
