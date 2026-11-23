@@ -1,4 +1,4 @@
-# Controle de Obrigações Martinelli: instalação em VPS
+# Controle de Obrigações Moscanelli: instalação em VPS
 
 Sistema web para controlar, mês a mês, as obrigações de cada CNPJ cliente (DAS, XML de notas, despesas, ISS, ICMS, fechamento contábil, folha e demais), por regime tributário e **só com o que se aplica a cada empresa**. Nada depende do Claude: é PHP + MySQL/MariaDB rodando no seu servidor.
 
