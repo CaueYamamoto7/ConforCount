@@ -1,0 +1,42 @@
+{
+	frankenphp
+	auto_https off
+	persist_config off
+}
+
+:{$PORT:80} {
+	root * /app/public
+	encode zstd gzip
+
+	header {
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "same-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		Strict-Transport-Security "max-age=31536000"
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+		-Server
+	}
+
+	redir /index.html /{?query} 308
+	@html path_regexp pagina ^/(login|obrigacoes|clientes|equipe|modelos|escritorios|conta)\.html$
+	redir @html /{re.pagina.1}{?query} 308
+
+	handle /api/* {
+		root * /app/backend/webroot
+		request_body {
+			max_size 1MB
+		}
+		php_server
+	}
+
+	@interno path_regexp interno (?i)(^|/)\.|\.php(/|$)
+	handle @interno {
+		respond 404
+	}
+
+	handle {
+		try_files {path} {path}.html
+		file_server
+	}
+}

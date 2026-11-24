@@ -1,0 +1,67 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: conforcont_test
+          POSTGRES_USER: conforcont
+          POSTGRES_PASSWORD: senha-de-teste
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U conforcont -d conforcont_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      DATABASE_URL: postgres://conforcont:senha-de-teste@127.0.0.1:5432/conforcont_test?sslmode=disable
+      SETUP_ESCRITORIO: Escritório de teste
+      SETUP_CNPJ: '11222333000181'
+      SETUP_NOME: Administrador de teste
+      SETUP_EMAIL: admin@example.test
+      SETUP_SENHA: senha-ficticia-teste
+      TEST_API_URL: http://127.0.0.1:8080
+      TEST_API_URL_SECONDARY: http://127.0.0.1:8081
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: intl, mbstring, pdo_pgsql, zip
+          coverage: none
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Instalar dependências
+        run: composer install --working-dir=backend --prefer-dist --no-interaction --no-progress
+      - name: Testar regras de domínio
+        run: |
+          composer check --working-dir=backend
+          node tests/calendario.test.mjs
+      - name: Testar API com PostgreSQL
+        run: |
+          php backend/bin/cake.php migrations migrate --connection direct --no-lock
+          php backend/bin/cake.php setup
+          php -S 127.0.0.1:8080 router.php > /tmp/conforcont-1.log 2>&1 &
+          php -S 127.0.0.1:8081 router.php > /tmp/conforcont-2.log 2>&1 &
+          for port in 8080 8081; do
+            curl --retry 10 --retry-connrefused --silent --fail "http://127.0.0.1:${port}/api/auth/session" > /dev/null
+          done
+          node tests/postgres-api.mjs
+      - name: Build do contêiner e validação do Caddy
+        run: |
+          docker build -f Dockerfile.vercel -t conforcont-ci .
+          docker run --rm --entrypoint frankenphp conforcont-ci validate --config /etc/frankenphp/Caddyfile
+      - name: Logs dos servidores
+        if: failure()
+        run: cat /tmp/conforcont-*.log 2>/dev/null || true

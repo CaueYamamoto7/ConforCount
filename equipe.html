@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Equipe · Controle de Obrigações Martinelli</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23C74E00'/%3E%3Ctext x='32' y='46' font-size='40' font-weight='700' text-anchor='middle' fill='white' font-family='Arial'%3EG%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/css/tokens.css" />
+    <link rel="stylesheet" href="/assets/css/base.css" />
+    <link rel="stylesheet" href="/assets/css/layout.css" />
+    <link rel="stylesheet" href="/assets/css/components.css" />
+    <link rel="stylesheet" href="/assets/css/pages.css" />
+  </head>
+  <body data-pagina="equipe">
+    <div class="wrap" id="shell" hidden>
+      <header class="top">
+        <div class="mark" aria-hidden="true">G</div>
+        <div>
+          <h1>Controle de Obrigações</h1>
+          <p id="eoff"></p>
+        </div>
+        <div class="who" id="who"></div>
+      </header>
+      <nav class="tabs" id="tabs" aria-label="Seções"></nav>
+      <div id="monthbar"></div>
+      <main id="view" aria-label="Equipe"><div class="empty">Carregando…</div></main>
+    </div>
+
+    <div id="modal"></div>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <noscript><p style="padding: 20px">Ative o JavaScript para usar o sistema.</p></noscript>
+    <script defer src="/assets/js/domain/calendario.js"></script>
+    <script defer src="/assets/js/domain/cnpj.js"></script>
+    <script defer src="/assets/js/domain/obrigacoes.js"></script>
+    <script defer src="/assets/js/util.js"></script>
+    <script defer src="/assets/js/store.js"></script>
+    <script defer src="/assets/js/api.js"></script>
+    <script defer src="/assets/js/ui.js"></script>
+    <script defer src="/assets/js/auth.js"></script>
+    <script defer src="/assets/js/components/workspace.js"></script>
+    <script defer src="/assets/js/pages/equipe.js"></script>
+    <script defer src="/assets/js/workspace.js"></script>
+  </body>
+</html>

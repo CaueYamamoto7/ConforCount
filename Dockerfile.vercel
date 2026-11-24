@@ -1,0 +1,19 @@
+FROM dunglas/frankenphp:1-php8.5-alpine
+
+RUN install-php-extensions intl mbstring openssl pdo_pgsql opcache zip \
+    && mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+ENV APP_ENV=production \
+    APP_TMP=/tmp/conforcont \
+    XDG_DATA_HOME=/tmp/frankenphp-data \
+    XDG_CONFIG_HOME=/tmp/frankenphp-config
+WORKDIR /app
+
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+COPY backend /app/backend
+RUN composer install --working-dir=/app/backend --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts
+COPY *.html /app/public/
+COPY assets /app/public/assets
+COPY Caddyfile /etc/frankenphp/Caddyfile
+
+EXPOSE 80

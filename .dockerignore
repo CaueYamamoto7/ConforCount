@@ -1,0 +1,11 @@
+.git
+.vercel
+.env*
+config/config.php
+backend/config/app_local.php
+backend/vendor
+backend/tmp
+backend/tests
+**/*.log
+**/*.dump
+**/*.sql.gz
