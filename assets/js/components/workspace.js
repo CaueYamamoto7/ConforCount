@@ -145,6 +145,10 @@ function pillT(t, hoje) {
     tx = 'Em atraso · ' + d + ' d';
   }
   if (e === 'pendente' && t.venc === hoje) tx = 'Vence hoje';
+  else if (vencendo(t, hoje)) {
+    const d = Math.round((msIso(t.venc) - msIso(hoje)) / DAY);
+    return '<span class="pill prazo">' + esc(ST[e] + ' · vence em ' + d + ' d') + '</span>';
+  }
   return '<span class="pill ' + cls + '">' + esc(tx) + '</span>';
 }
 const dowTxt = (iso) => DOWS[dow(iso)];

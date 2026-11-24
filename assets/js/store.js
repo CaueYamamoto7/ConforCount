@@ -60,6 +60,11 @@ const deptoIdx = (m) => {
 };
 const efetivo = (t, hoje) => (ABERTA.includes(t.status) && t.venc < hoje ? 'atraso' : t.status);
 
+/* Aberta e vencendo hoje ou nos próximos 5 dias (ainda não atrasada). */
+const PRAZO_AVISO = 5;
+const vencendo = (t, hoje) =>
+  ABERTA.includes(t.status) && t.venc >= hoje && t.venc <= addDias(hoje, PRAZO_AVISO);
+
 function tarefasDoMes(mes) {
   const out = [];
   state.clientes.forEach((c) => {

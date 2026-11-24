@@ -53,6 +53,11 @@ class CatalogoPadrao
             ['EFD-Contribuições', 'Fiscal', self::REGIMES_LUCRO, null, [], 'nutil', 10, 'prorroga', '10º dia útil do 2º mês subsequente.'],
             ['DEFIS', 'Fiscal', ['Simples Nacional'], null, [3], 'dia', 31, 'prorroga', 'Anual. Confira eventual prorrogação.'],
             ['DASN-SIMEI', 'Fiscal', ['MEI'], null, [5], 'dia', 31, 'prorroga', 'Anual. Confira eventual prorrogação.'],
+            ['DCTF', 'Fiscal', self::REGIMES_LUCRO, null, [], 'nutil', 15, 'prorroga', '15º dia útil do 2º mês subsequente.'],
+            ['EFD-Reinf', 'Fiscal', self::REGIMES_PJ, null, [], 'dia', 15, 'prorroga', 'Retenções e serviços tomados/prestados do mês anterior.'],
+            ['DeSTDA', 'Fiscal', ['Simples Nacional'], 'Tem ICMS', [], 'dia', 28, 'prorroga', 'O prazo varia por estado: ajuste.'],
+            ['Retenções na fonte (IRRF/PCC)', 'Fiscal', self::REGIMES_LUCRO, null, [], 'dia', 20, 'antecipa', 'Confira o ajuste para dia sem expediente.'],
+            ['Conferir parcelamentos em andamento', 'Fiscal', self::REGIMES_TODOS, null, [], 'dia', 25, 'antecipa', 'Guias de parcelamento (Receita, PGFN, estado, município).'],
             // ---- Contábil ----
             ['Receber extratos bancários', 'Contábil', self::REGIMES_PJ, null, [], 'dia', 8, 'prorroga', null],
             ['Fechar a contabilidade', 'Contábil', self::REGIMES_PJ, null, [], 'dia', 28, 'prorroga', null],

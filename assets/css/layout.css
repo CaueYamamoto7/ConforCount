@@ -91,3 +91,26 @@
   font-size: 13px;
   margin: 0 0 14px;
 }
+
+/* Marca: ConforCount em destaque, acima do subtítulo */
+.top h1,
+.loginbox .brand h1 {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.top h1 .nome,
+.loginbox .brand h1 .nome {
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+.top h1 .sub-t,
+.loginbox .brand h1 .sub-t {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+  letter-spacing: 0;
+}

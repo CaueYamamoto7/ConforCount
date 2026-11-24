@@ -210,6 +210,10 @@ td.nowrap {
   background: var(--warn-soft);
   color: var(--warn);
 }
+.pill.prazo {
+  background: var(--soon-soft);
+  color: var(--soon);
+}
 .pill.mute {
   background: var(--surface-2);
   color: var(--ink-2);

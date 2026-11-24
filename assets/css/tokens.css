@@ -14,6 +14,8 @@
   --warn-soft: #faebc9;
   --bad: #b42318;
   --bad-soft: #fbe0dc;
+  --soon: #9a4a00;
+  --soon-soft: #ffd9a8;
   --info: #2f5c99;
   --info-soft: #e0eaf6;
   --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
@@ -38,6 +40,8 @@
     --warn-soft: #3b2f12;
     --bad: #ff8479;
     --bad-soft: #40201d;
+    --soon: #ffb25e;
+    --soon-soft: #4d2e0c;
     --info: #8db4ee;
     --info-soft: #1b2c45;
     color-scheme: dark;

@@ -66,6 +66,9 @@ function viewObrig() {
     (f.resp === '__none' ? ' selected' : '') +
     '>Sem responsável</option>';
   let h =
+    (isColab()
+      ? ''
+      : '<p class="note" style="margin:0 0 10px">Precisa de um tipo de obrigação que não está na lista? <a href="/modelos.html">Criar nova obrigação</a> (vale para qualquer regime).</p>') +
     '<div class="filters">' +
     '<label>Buscar cliente ou CNPJ<input id="fq" data-f="f.q" type="search" value="' +
     esc(f.q) +
@@ -91,6 +94,7 @@ function viewObrig() {
         (s) => '<span class="cel s-' + s + '" style="cursor:default;min-width:0">' + esc(SH[s]) + '</span>',
       )
       .join('') +
+    '<span class="cel prazo" style="cursor:default;min-width:0">Vence em até 5 dias</span>' +
     '<span>· clique em uma célula para mudar a situação. Cada cliente só vê as obrigações que se aplicam a ele; o traço indica que não se aplica.</span></div>';
   if (!cli.length)
     return (
@@ -123,10 +127,20 @@ function viewObrig() {
         return (
           '<td><button class="cel s-' +
           e +
+          (vencendo(t, hoje) ? ' prazo' : '') +
           '" data-act="tarefa" data-k="' +
           esc(t.k) +
           '" title="' +
-          esc(c.nome + ' · ' + m.nome + ' · ' + ST[e] + ' · vence ' + fmtData(t.venc)) +
+          esc(
+            c.nome +
+              ' · ' +
+              m.nome +
+              ' · ' +
+              ST[e] +
+              ' · vence ' +
+              fmtData(t.venc) +
+              (vencendo(t, hoje) ? ' (vence em breve)' : ''),
+          ) +
           '">' +
           esc(SH[e]) +
           '<small>' +

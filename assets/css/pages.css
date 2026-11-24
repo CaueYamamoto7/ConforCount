@@ -392,3 +392,10 @@ details.exc summary {
   border-top: 1px solid var(--line);
   margin: 4px 0;
 }
+
+/* Vence em até 5 dias: laranja, antes de ficar vermelho */
+.cel.prazo {
+  background: var(--soon-soft);
+  color: var(--soon);
+  border-color: var(--soon);
+}
